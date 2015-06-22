@@ -1,0 +1,96 @@
+<div ng-controller="CreateProductCtrl">
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="messages" class="alert alert-{{alertStatus}}" ng-show="messages">
+                <span ng-bind="messages"></span>
+                <i class="dismiss-messages pull-right glyphicon glyphicon-remove" ng-click="messages = ''"
+                   ng-show="messages"></i>
+            </div>
+            <img class="spinner" src="/img/ajax-loader.gif" ng-show="loading"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Crear un producto</h3>
+            <!-- cambio conferenceForm por productoForm -->
+            <form name="productoForm" novalidate role="form">
+                <div class="form-group">
+                    <label for="name">Nombre <span class="required">*</span></label>
+                    <!-- cambio conferenceForm pot productoForm -->
+                    <span class="label label-danger"
+                        ng-show="productoForm.name.$error.required">Requerido!</span>
+                    <input id="name" type="text" name="name" ng-model="producto.name" class="form-control"
+                           ng-required="true"/>
+                </div>
+
+<!--
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <select id="city" ng-model="conference.city" name="city" ng-options="city for city in cities"
+                            class="form-control">
+                    </select>
+                </div>
+-->
+                <div class="form-group">
+                    <label for="description">Descripcion</label>
+                    <textarea id="description" type="text" name="description" ng-model="producto.description"
+                              class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="topics">Categorias</label>
+                    <select id="topics" ng-model="producto.topics" name="topics"
+                            ng-options="topic for topic in topics"
+                            class="form-control" multiple>
+                    </select>
+                </div>
+
+                <div class="form-group" ng-controller="DatepickerCtrl">
+                    <label for="startDate">Fecha</label>
+                    <p class="input-group">
+                        <input id="startDate" type="text" class="form-control" datepicker-popup="{{format}}"
+                               ng-model="producto.startDate" is-open="opened"
+                               datepicker-options="dateOptions"
+                               close-text="Close"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </p>
+                </div>
+<!--
+                <div class="form-group" ng-controller="DatepickerCtrl">
+                    <label for="endDate">End Date</label>
+                    <span class="label label-danger"
+                        ng-show="!isValidDates()">End Date must be later or equal to Start Date!</span>
+                    <p class="input-group">
+                        <input id="endDate" type="text" class="form-control" datepicker-popup="{{format}}"
+                               ng-model="conference.endDate" is-open="opened"
+                               datepicker-options="dateOptions"
+                               close-text="Close"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </p>
+                </div>
+-->
+                <div class="form-group">
+                    <label for="amount">cantidad</label>
+                    <span class="label label-danger"
+                        ng-show="!isValidMaxAttendees()">Must be an integer!</span>
+                    <!-- The input type is text as the conference.maxAttendees will be undefined,
+                    hence isValidMaxAttendees will be true when input type is number -->
+                    <input id="amount" type="text" name="amount" ng-model="producto.amount"
+                           class="form-control"/>
+                </div>
+
+                <button ng-click="createProduct(productoForm)" class="btn btn-primary"
+                        ng-disabled="!isValidProduct(productoForm) || loading">Create
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
